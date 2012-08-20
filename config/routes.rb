@@ -57,7 +57,10 @@ Voiczz::Application.routes.draw do
 	# Note: This route will make all actions in every controller accessible via GET requests.
 	# match ':controller(/:action(/:id))(.:format)'
 
-	root :to => "application#init"
+	root :to => "application#intro"
+	get "home" => "application#home"
 	devise_for :user, :path_names => { :sign_up=>"signup", :sign_in=>"login", :sign_out=>"logout" }
+	match "/auth/:provider/callback" => "authentication#create"
+	resources :authentication, :path=>:auth, :only=>:index
 
 end
