@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
 
 	protect_from_forgery
+	before_filter :login?, :except=> [ :intro ]
 
 	public
 
@@ -8,7 +9,9 @@ class ApplicationController < ActionController::Base
 		redirect_to :home if user_signed_in?
 	end
 
-	def home
+	private
+
+	def login?
 		redirect_to :root if !user_signed_in?
 	end
 

@@ -62,5 +62,6 @@ Voiczz::Application.routes.draw do
 	devise_for :user, :path_names => { :sign_up=>"signup", :sign_in=>"login", :sign_out=>"logout" }
 	match "/auth/:provider/callback" => "authentication#create"
 	resources :authentication, :path=>:auth, :only=>:index
+	resources :rule, :only=>:index
 
 end

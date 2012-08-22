@@ -12,12 +12,14 @@ class Authentication
 	field :name,     :type => String
 	field :nickname, :type => String
 	field :pic,      :type => String
+	field :url,      :type => String
 
 	## Validations
 	validates :provider, :presence=>true
 	validates :uid,      :presence=>true
 #	validates :email,    :email=>true
 #	validates :pic,      :url=>true
+#	validates :url,      :url=>true
 
 	## Functions
 	def self.parse auth
@@ -28,6 +30,7 @@ class Authentication
 	 			data[:name] = auth[:info][:name]
 	 			data[:nickname] = auth[:info][:nickname]
 	 			data[:pic] = auth[:info][:image]
+	 			data[:url] = auth[:extra][:raw_info][:link]
 	 	end
 		return data
 	end

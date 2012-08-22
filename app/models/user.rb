@@ -6,8 +6,8 @@ class User
 	has_many :authentications, :inverse_of => :user, :autosave => true
 
 	# Include default devise modules. Others available are:
-	# :validatable, :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
-	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+	# :validatable, :confirmable, :lockable, :timeoutable and :omniauthable
+	devise :database_authenticatable, :token_authenticatable, :registerable, :recoverable, :rememberable, :trackable
 
 	## Database authenticatable
 	field :email,              :type => String, :default => ""
@@ -43,10 +43,18 @@ class User
 	# field :locked_at,       :type => Time
 
 	## Token authenticatable
-	# field :authentication_token, :type => String
+	field :authentication_token, :type => String
 
 	## Validation
-	validates :email,              :presence=>true #:email=>true
+	validates :email,              :presence=>true
 	validates :encrypted_password, :presence=>true
+
+	## Custom Validation (Copy from Devise)
+#	validates_presence_of     :email,    :if=>:email_required?
+# 	validates_uniqueness_of   :email,    :case_sensitive=>false, :allow_blank=>true, :if=>:email_changed?
+	validates_format_of       :email,    :with =>Devise.email_regexp, :allow_blank=>true, :if=>:email_changed?
+#	validates_presence_of     :password, :if=>:password_required? # :on=>:create
+	validates_confirmation_of :password, :on=>:create
+	validates_length_of       :password, :within=>Devise.password_length, :allow_blank=>true
 
 end
