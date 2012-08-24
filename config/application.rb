@@ -70,6 +70,9 @@ module Voiczz
 		# Deploying Rails 3.1 with Devise on Heroku
 		config.assets.initialize_on_precompile = false
 
+		# Prevents the pre-compilation of partials SASS files
+		config.assets.precompile << /^((.*?)\/)?(?!_)[^\/]*$/
+
 		# Customize Devise View
 		config.to_prepare do
   			Devise::SessionsController.layout "application" 
